@@ -1,14 +1,8 @@
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Threading.Tasks;
 using ExClmMvc.Data;
 using ExClmMvc.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Logging;
 
 namespace ExClmMvc.Controllers
 {
@@ -21,7 +15,7 @@ namespace ExClmMvc.Controllers
         {
             context = _context;
         }
-        // GET: Expense/Index
+
         [HttpGet("Index")]
         public async Task<IActionResult> Index()
         {
@@ -44,8 +38,6 @@ namespace ExClmMvc.Controllers
             return View(claims);
         }
 
-
-        // GET: Expense/Create
         [HttpGet("Create")]
         public IActionResult Create()
         {
@@ -54,7 +46,6 @@ namespace ExClmMvc.Controllers
             return View();
         }
 
-        // POST: Expense/Create
         [HttpPost("Create")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("EmployeeId,CategoryId,SubcategoryIds,ClaimAmount,ExpenseDate,ExpenseLocation,BillAttachment,Remarks")] ExpenseClaim model)
@@ -87,7 +78,6 @@ namespace ExClmMvc.Controllers
                         return View(model);
                     }
 
-                    // Ensure SubcategoryIds is a comma-separated string
                     model.SubcategoryIds = string.Join(",", Request.Form["SubcategoryIds"].ToArray());
 
                     context.Add(model);
@@ -100,7 +90,6 @@ namespace ExClmMvc.Controllers
             return View(model);
         }
 
-        // AJAX: GetSubcategories
         [HttpGet("GetSubcategories")]
         public JsonResult GetSubcategories(int categoryId)
         {

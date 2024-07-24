@@ -1,0 +1,76 @@
+@model ExClmMvc.Models.ExpenseClaim
+
+@{
+    ViewData["Title"] = "Create Expense Claim";
+}
+
+<h2>Create Expense Claim</h2>
+
+<form asp-action="Create" method="post" enctype="multipart/form-data">
+    <div class="form-group">
+        <label asp-for="EmployeeId" class="control-label"></label>
+        <select asp-for="EmployeeId" class="form-control" asp-items="ViewBag.Employees"></select>
+        <span asp-validation-for="EmployeeId" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="CategoryId" class="control-label"></label>
+        <select asp-for="CategoryId" class="form-control" id="CategoryId" asp-items="ViewBag.Categories"></select>
+        <span asp-validation-for="CategoryId" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="SubcategoryIds" class="control-label"></label>
+        <select asp-for="SubcategoryIds" class="form-control" id="SubcategoryIds" multiple="multiple"></select>
+        <span asp-validation-for="SubcategoryIds" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="ClaimAmount" class="control-label"></label>
+        <input asp-for="ClaimAmount" class="form-control" />
+        <span asp-validation-for="ClaimAmount" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="ExpenseDate" class="control-label"></label>
+        <input asp-for="ExpenseDate" type="date" class="form-control" />
+        <span asp-validation-for="ExpenseDate" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="ExpenseLocation" class="control-label"></label>
+        <input asp-for="ExpenseLocation" class="form-control" />
+        <span asp-validation-for="ExpenseLocation" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="BillAttachment" class="control-label"></label>
+        <input asp-for="BillAttachment" type="file" class="form-control" />
+        <span asp-validation-for="BillAttachment" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Remarks" class="control-label"></label>
+        <textarea asp-for="Remarks" class="form-control"></textarea>
+        <span asp-validation-for="Remarks" class="text-danger"></span>
+    </div>
+    <button type="submit" class="btn btn-primary">Submit</button>
+</form>
+
+@section Scripts {
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#CategoryId').change(function () {
+                var categoryId = $(this).val();
+                $.ajax({
+                    url: '/Expense/GetSubcategories',
+                    data: { categoryId: categoryId },
+                    success: function (data) {
+                        var subcategoryDropdown = $('#SubcategoryIds');
+                        subcategoryDropdown.empty();
+                        $.each(data, function (i, subcategory) {
+                            subcategoryDropdown.append($('<option>', {
+                                value: subcategory.subcategoryId,
+                                text: subcategory.subcategoryName
+                            }));
+                        });
+                    }
+                });
+            });
+        });
+    </script>
+}

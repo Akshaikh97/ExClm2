@@ -10,7 +10,6 @@ namespace ExClmMvc.Controllers
     public class ExpenseController : Controller
     {
         private readonly Context context;
-
         public ExpenseController(Context _context)
         {
             context = _context;
@@ -48,13 +47,14 @@ namespace ExClmMvc.Controllers
 
         [HttpPost("Create")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("EmployeeId,CategoryId,SubcategoryIds,ClaimAmount,ExpenseDate,ExpenseLocation,BillAttachment,Remarks")] ExpenseClaim model)
+        public async Task<IActionResult> Create([Bind("EmployeeId,CategoryId,SubcategoryIds,ClaimAmount,ExpenseDate,ExpenseLocation,Remarks")] ExpenseClaim model, IFormFile billAttachment)
         {
             if (ModelState.IsValid)
             {
                 var employee = await context.Employees.FindAsync(model.EmployeeId);
                 if (employee != null)
                 {
+                    // Validate claim amount based on designation
                     switch (employee.Designation)
                     {
                         case "CEO":
@@ -80,6 +80,17 @@ namespace ExClmMvc.Controllers
 
                     model.SubcategoryIds = string.Join(",", Request.Form["SubcategoryIds"].ToArray());
 
+                    // Handle file upload
+                    if (billAttachment != null && billAttachment.Length > 0)
+                    {
+                        var filePath = Path.Combine("wwwroot", "Images", billAttachment.FileName);
+                        using (var stream = new FileStream(filePath, FileMode.Create))
+                        {
+                            await billAttachment.CopyToAsync(stream);
+                        }
+                        model.BillAttachment = $"/Images/{billAttachment.FileName}";
+                    }
+
                     context.Add(model);
                     await context.SaveChangesAsync();
                     return RedirectToAction(nameof(Index));
@@ -89,6 +100,7 @@ namespace ExClmMvc.Controllers
             ViewData["Employees"] = new SelectList(context.Employees, "EmployeeId", "Name");
             return View(model);
         }
+
 
         [HttpGet("GetSubcategories")]
         public JsonResult GetSubcategories(int categoryId)

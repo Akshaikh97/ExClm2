@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "c:\\InterviewPreparation\\MVC Project\\ExClm2\\ExClmMvc\\ExClmMvc.csproj": {}
+    "C:\\InterviewPreparation\\MVC Project\\ExClm2\\ExClmMvc\\ExClmMvc.csproj": {}
   },
   "projects": {
-    "c:\\InterviewPreparation\\MVC Project\\ExClm2\\ExClmMvc\\ExClmMvc.csproj": {
+    "C:\\InterviewPreparation\\MVC Project\\ExClm2\\ExClmMvc\\ExClmMvc.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "c:\\InterviewPreparation\\MVC Project\\ExClm2\\ExClmMvc\\ExClmMvc.csproj",
+        "projectUniqueName": "C:\\InterviewPreparation\\MVC Project\\ExClm2\\ExClmMvc\\ExClmMvc.csproj",
         "projectName": "ExClmMvc",
-        "projectPath": "c:\\InterviewPreparation\\MVC Project\\ExClm2\\ExClmMvc\\ExClmMvc.csproj",
+        "projectPath": "C:\\InterviewPreparation\\MVC Project\\ExClm2\\ExClmMvc\\ExClmMvc.csproj",
         "packagesPath": "C:\\Users\\dell\\.nuget\\packages\\",
-        "outputPath": "c:\\InterviewPreparation\\MVC Project\\ExClm2\\ExClmMvc\\obj\\",
+        "outputPath": "C:\\InterviewPreparation\\MVC Project\\ExClm2\\ExClmMvc\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"

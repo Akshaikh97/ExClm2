@@ -12,7 +12,7 @@ namespace ExClmMvc.Models
         public int SubcategoryId { get; set; }
         public int CategoryId { get; set; }
         public string? SubcategoryName { get; set; }
-
+        //one to many
         public virtual ExpenseCategory? Category { get; set; }
     }
 }
